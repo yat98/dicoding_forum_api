@@ -4,6 +4,7 @@ describe('NewComment entities', () => {
   it('should throw error when payload not contain needed property', () => {
     // Arrange
     const payload = {
+      threadId: 'thread-123',
       content: 'Lorem ipsum sit dolor',
     };
 
@@ -14,6 +15,7 @@ describe('NewComment entities', () => {
   it('should throw error when payload not meet data type specification', () => {
     // Arrange
     const payload = {
+      threadId: 'thread-123',
       content: ['Lorem ipsum sit dolor'],
       owner: 'user-123',
     };
@@ -25,6 +27,7 @@ describe('NewComment entities', () => {
   it('should create NewComment entities correctly', () => {
     // Arrange
     const payload = {
+      threadId: 'thread-123',
       content: 'Lorem ipsum sit dolor',
       owner: 'user-123',
     };

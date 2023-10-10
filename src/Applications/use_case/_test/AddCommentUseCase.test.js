@@ -7,6 +7,7 @@ describe('AddCommentUseCase', () => {
   it('should orchestrating the add user action correctly', async () => {
     // Arrange
     const useCasePayload = {
+      threadId: 'thread-123',
       content: 'Lorem ipsum sit dolor',
       owner: 'user-123',
     };
@@ -30,6 +31,7 @@ describe('AddCommentUseCase', () => {
 
     // Assert
     expect(mockCommentRepository.addComment).toBeCalledWith(new NewComment({
+      threadId: 'thread-123',
       content: 'Lorem ipsum sit dolor',
       owner: 'user-123',
     }));
