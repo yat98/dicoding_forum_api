@@ -1,4 +1,6 @@
-class DetailCommentUseCase {
+const DetailThread = require("../../Domains/threads/entities/DetailThread");
+
+class DetailThreadUseCase {
   constructor({
     threadRepository,
     commentRepository,
@@ -12,11 +14,11 @@ class DetailCommentUseCase {
     const thread = await this._threadRepository.getThreadById(threadId);
     const comments = await this._commentRepository.getCommentsByThreadId(threadId);
 
-    return {
-      ...thread,
+    return new DetailThread({
+      thread,
       comments,
-    };
+    });
   }
 }
 
-module.exports = DetailCommentUseCase;
+module.exports = DetailThreadUseCase;

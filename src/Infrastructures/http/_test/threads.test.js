@@ -197,4 +197,92 @@ describe('/threads endpoint', () => {
       expect(responseJson.message).toEqual('Missing authentication');
     });
   });
+
+  describe('when GET /threads/{threadId}', () => {
+    it('should response 200 and get detail thread', async () => {
+      // Arrange
+      const requestPayload = {
+        username: 'dicoding',
+        password: 'secret',
+      };
+      const threadRequestPayload = {
+        title: 'Lorem',
+        body: 'Lorem ipsum site dolor',
+      };
+      const commentRequestPayload = {
+        content: 'Lorem ipsum site dolor',
+      };
+      const server = await createServer(container);
+      // add user
+      let response = await server.inject({
+        method: 'POST',
+        url: '/users',
+        payload: {
+          username: 'dicoding',
+          password: 'secret',
+          fullname: 'Dicoding Indonesia',
+        },
+      });
+      // login & get token
+      response = await server.inject({
+        method: 'POST',
+        url: '/authentications',
+        payload: requestPayload,
+      });
+      const accessToken = response.result.data.accessToken;
+      // add thread
+      response = await server.inject({
+        method: 'POST',
+        url: '/threads',
+        payload: threadRequestPayload,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      const threadId = response.result.data.addedThread.id;
+      response = await server.inject({
+        method: 'POST',
+        url: `/threads/${threadId}/comments`,
+        payload: commentRequestPayload,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      response = await server.inject({
+        method: 'POST',
+        url: `/threads/${threadId}/comments`,
+        payload: commentRequestPayload,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      const commentId = response.result.data.addedComment.id;
+      response = await server.inject({
+        method: 'DELETE',
+        url: `/threads/${threadId}/comments/${commentId}`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      // Action
+      response = await server.inject({
+        method: 'GET',
+        url: `/threads/${threadId}`,
+      });
+
+      // Assert
+      const responseJson = JSON.parse(response.payload);
+      expect(response.statusCode).toEqual(200);
+      expect(responseJson.status).toEqual('success');
+      expect(responseJson.data.thread.id).toBeDefined();
+      expect(responseJson.data.thread.title).toBeDefined();
+      expect(responseJson.data.thread.body).toBeDefined();
+      expect(responseJson.data.thread.date).toBeDefined();
+      expect(responseJson.data.thread.username).toBeDefined();
+      expect(responseJson.data.thread.comments).toBeDefined();
+      expect(responseJson.data.thread.comments.length).toBe(2);
+      expect(responseJson.data.thread.comments[1].content).toBe('**komentar telah dihapus**');
+    });
+  });
 });

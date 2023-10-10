@@ -1,8 +1,9 @@
 const CommentRepository = require("../../../Domains/comments/CommentRepository");
 const Comment = require("../../../Domains/comments/entities/Comment");
 const ThreadRepository = require("../../../Domains/threads/ThreadRepository");
+const DetailThread = require("../../../Domains/threads/entities/DetailThread");
 const Thread = require("../../../Domains/threads/entities/Thread");
-const DetailCommentUseCase = require("../DetailThreadUseCase");
+const DetailThreadUseCase = require("../DetailThreadUseCase");
 
 describe('AddThreadUseCase', () => {
   it('should orchestrating the detail thread action correctly', async () => {
@@ -43,7 +44,7 @@ describe('AddThreadUseCase', () => {
     mockCommentRepository.getCommentsByThreadId = jest.fn()
       .mockImplementation(() => Promise.resolve([mockCommentOne, mockCommentTwo]));
 
-    const detailThreadUseCase = new DetailCommentUseCase({
+    const detailThreadUseCase = new DetailThreadUseCase({
       threadRepository: mockThreadRepository,
       commentRepository: mockCommentRepository,
     });
@@ -54,12 +55,12 @@ describe('AddThreadUseCase', () => {
     // Assert
     expect(mockThreadRepository.getThreadById).toBeCalledWith('thread-123');
     expect(mockCommentRepository.getCommentsByThreadId).toBeCalledWith('thread-123');
-    expect(detailThread).toEqual({
-      ...mockThread,
+    expect(detailThread).toEqual(new DetailThread({
+      thread: mockThread,
       comments: [
         mockCommentOne,
         mockCommentTwo,
       ],
-    });
+    }));
   });
 });

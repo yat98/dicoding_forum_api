@@ -10,7 +10,7 @@ class Comment {
 
   _verifyPayload(payload) {
     const { id, username, date, content, is_delete: isDelete } = payload;
-
+    
     if (!id || !username || !date || !content || !isDelete) {
       throw new Error('COMMENT.NOT_CONTAIN_NEEDED_PROPERTY');
     }

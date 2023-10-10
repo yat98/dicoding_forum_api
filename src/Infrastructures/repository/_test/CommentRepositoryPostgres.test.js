@@ -4,6 +4,7 @@ const UsersTableTestHelper = require("../../../../tests/UsersTableTestHelper");
 const AuthorizationError = require("../../../Commons/exceptions/AuthorizationError");
 const NotFoundError = require("../../../Commons/exceptions/NotFoundError");
 const AddedComment = require("../../../Domains/comments/entities/AddedComment");
+const Comment = require("../../../Domains/comments/entities/Comment");
 const NewComment = require("../../../Domains/comments/entities/NewComment");
 const pool = require("../../database/postgres/pool");
 const CommentRepositoryPostgres = require("../CommentRepositoryPostgres");
@@ -134,6 +135,43 @@ describe('CommentRepositoryPostgres', () => {
       await expect(threadRepositoryPostgres.verifyCommentOwner('comment-123','user-999'))
         .rejects
         .toThrowError(AuthorizationError);
+    });
+  });
+
+  describe('getCommentsByThreadId function', () => {
+    it('should return empty comments', async () => {
+      // Arrange
+      await UsersTableTestHelper.addUser({ username: 'dicoding' });
+      await ThreadsTableTestHelper.addThread({ title: 'Lorem' });
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, {});
+
+      // Action
+      const commentRepository = await commentRepositoryPostgres.getCommentsByThreadId('thread-123');
+
+      // Assert
+      expect(commentRepository).toEqual([]);
+    });
+
+    it('should return comments correctly', async () => {
+      // Arrange
+      const date = new Date().toISOString();
+      await UsersTableTestHelper.addUser({ username: 'dicoding' });
+      await ThreadsTableTestHelper.addThread({ title: 'Lorem' });
+      await CommentsTableTestHelper.addComment({ content: 'lorem', date })
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, {});
+
+      // Action
+      const commentRepository = await commentRepositoryPostgres.getCommentsByThreadId('thread-123');
+
+      // Assert
+      expect(commentRepository.length).toBe(1);
+      expect(commentRepository[0]).toEqual(new Comment({
+        id: 'comment-123',
+        content: 'lorem',
+        date,
+        username: 'dicoding',
+        is_delete: 'false',
+      }));
     });
   });
 });
