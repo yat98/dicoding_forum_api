@@ -1,6 +1,7 @@
 const CommentRepository = require("../../../Domains/comments/CommentRepository");
 const AddedComment = require("../../../Domains/comments/entities/AddedComment");
 const NewComment = require("../../../Domains/comments/entities/NewComment");
+const ThreadRepository = require("../../../Domains/threads/ThreadRepository");
 const AddCommentUseCase = require("../AddCommentUseCase");
 
 describe('AddCommentUseCase', () => {
@@ -18,12 +19,17 @@ describe('AddCommentUseCase', () => {
       owner: 'John Doe',
     });
 
+    const mockThreadRepository = new ThreadRepository();
     const mockCommentRepository = new CommentRepository();
+
     mockCommentRepository.addComment = jest.fn()
       .mockImplementation(() => Promise.resolve(mockAddedComment));
+    mockThreadRepository.verifyThreadExists = jest.fn()
+      .mockImplementation(() => Promise.resolve());
 
     const addCommentUseCase = new AddCommentUseCase({
-      commentRepository: mockCommentRepository
+      commentRepository: mockCommentRepository,
+      threadRepository: mockThreadRepository,
     });
 
     // Action
@@ -35,6 +41,7 @@ describe('AddCommentUseCase', () => {
       content: 'Lorem ipsum sit dolor',
       owner: 'user-123',
     }));
+    expect(mockThreadRepository.verifyThreadExists).toBeCalledWith('thread-123');
     expect(addedComment).toEqual(new AddedComment({
       id: 'comment-123',
       content: useCasePayload.content,
