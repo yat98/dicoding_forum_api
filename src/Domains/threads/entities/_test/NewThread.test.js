@@ -16,6 +16,7 @@ describe('NewThread entities', () => {
     const payload = {
       title: 'Lorem',
       body: ['Lorem ipsum sit dolor'],
+      owner: 'user-123',
     };
 
     // Action & Assert
@@ -27,6 +28,7 @@ describe('NewThread entities', () => {
     const payload = {
       title: 'Lorem',
       body: 'Lorem ipsum sit dolor',
+      owner: 'user-123',
     };
 
     // Action  
@@ -36,5 +38,6 @@ describe('NewThread entities', () => {
     expect(newThread).toBeInstanceOf(NewThread);
     expect(newThread.title).toBe(payload.title);
     expect(newThread.body).toBe(payload.body);
+    expect(newThread.owner).toBe(payload.owner);
   });
 });

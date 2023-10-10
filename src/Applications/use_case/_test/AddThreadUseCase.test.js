@@ -8,7 +8,8 @@ describe('AddThreadUseCase', () => {
     // Arrange
     const useCasePayload = {
       title: 'Lorem',
-      body: 'Lorem ipsum sit dolor'
+      body: 'Lorem ipsum sit dolor',
+      owner: 'user-123',
     };
 
     const mockAddedThread = new AddedThread({
@@ -31,7 +32,8 @@ describe('AddThreadUseCase', () => {
     // Assert
     expect(mockThreadRepository.addThread).toBeCalledWith(new NewThread({
       title: 'Lorem',
-      body: 'Lorem ipsum sit dolor'
+      body: 'Lorem ipsum sit dolor',
+      owner: 'user-123',
     }));
     expect(addedThread).toEqual(new AddedThread({
       id: 'thread-123',
