@@ -33,12 +33,12 @@ describe('AddedComment entities', () => {
     };
 
     // Action  
-    const newThread = new AddedComment(payload);
+    const addedThread = new AddedComment(payload);
 
     // Assert
-    expect(newThread).toBeInstanceOf(AddedComment);
-    expect(newThread.id).toBe(payload.id);
-    expect(newThread.content).toBe(payload.content);
-    expect(newThread.owner).toBe(payload.owner);
+    expect(addedThread).toBeInstanceOf(AddedComment);
+    expect(addedThread.id).toBe(payload.id);
+    expect(addedThread.content).toBe(payload.content);
+    expect(addedThread.owner).toBe(payload.owner);
   });
 });

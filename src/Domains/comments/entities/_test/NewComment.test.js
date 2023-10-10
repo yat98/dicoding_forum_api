@@ -33,11 +33,12 @@ describe('NewComment entities', () => {
     };
 
     // Action  
-    const newThread = new NewComment(payload);
+    const newComment = new NewComment(payload);
 
     // Assert
-    expect(newThread).toBeInstanceOf(NewComment);
-    expect(newThread.content).toBe(payload.content);
-    expect(newThread.owner).toBe(payload.owner);
+    expect(newComment).toBeInstanceOf(NewComment);
+    expect(newComment.threadId).toBe(payload.threadId);
+    expect(newComment.content).toBe(payload.content);
+    expect(newComment.owner).toBe(payload.owner);
   });
 });
