@@ -1,12 +1,11 @@
 class Comment {
   constructor(payload) {
     this._verifyPayload(payload);
-    
+
     this.id = payload.id;
     this.username = payload.username;
     this.date = payload.date;
     this.content = payload.is_delete === 'true' ? '**komentar telah dihapus**' : payload.content;
-    this.isDelete = payload.is_delete;
   }
 
   _verifyPayload(payload) {

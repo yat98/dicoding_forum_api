@@ -47,7 +47,6 @@ describe('Comment entities', () => {
     expect(newComment.username).toBe(payload.username);
     expect(newComment.date).toBe(payload.date);
     expect(newComment.content).toBe(payload.content);
-    expect(newComment.isDelete).toBe(payload.is_delete);
   });
 
   it('should create Comment entities correctly when is delete', () => {
@@ -69,6 +68,5 @@ describe('Comment entities', () => {
     expect(comment.username).toBe(payload.username);
     expect(comment.date).toBe(payload.date);
     expect(comment.content).toBe('**komentar telah dihapus**');
-    expect(comment.isDelete).toBe(payload.is_delete);
   });
 });
