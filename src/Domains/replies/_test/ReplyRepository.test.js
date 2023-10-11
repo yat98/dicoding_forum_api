@@ -4,12 +4,12 @@ const ReplyRepository = require("../ReplyRepository");
 describe('ReplyRepository interface', () => {
   it('should throw error when invoke unimplemented method', async () => {
     // Arrange
-    const commentRepository = new ReplyRepository();
+    const replyRepository = new ReplyRepository();
 
     // Action & Assert
-    await expect(commentRepository.addReply('')).rejects.toThrowError('REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED');
-    await expect(commentRepository.deleteReply('')).rejects.toThrowError('REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED');
-    await expect(commentRepository.verifyReplyOwner('','')).rejects.toThrowError('REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED');
-    await expect(commentRepository.getRepliesByThreadId('')).rejects.toThrowError('REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    await expect(replyRepository.addReply('')).rejects.toThrowError('REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    await expect(replyRepository.deleteReply('')).rejects.toThrowError('REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    await expect(replyRepository.verifyReplyOwner('','')).rejects.toThrowError('REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    await expect(replyRepository.getRepliesByThreadId('')).rejects.toThrowError('REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED');
   });
 });

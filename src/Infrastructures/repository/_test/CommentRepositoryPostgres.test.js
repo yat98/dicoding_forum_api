@@ -21,7 +21,7 @@ describe('CommentRepositoryPostgres', () => {
   });
 
   describe('addComment function', () => {
-    it('should persist new thread and return added thread correctly', async () => {
+    it('should persist new comment and return added comment correctly', async () => {
       // Arrange
       await UsersTableTestHelper.addUser({ username: 'dicoding' });
       await ThreadsTableTestHelper.addThread({ title: 'Lorem' });
@@ -41,7 +41,7 @@ describe('CommentRepositoryPostgres', () => {
       expect(thread).toHaveLength(1);
     });
 
-    it('should return added thread correctly', async () => {
+    it('should return added comment correctly', async () => {
       // Arrange
       await UsersTableTestHelper.addUser({ username: 'dicoding' });
       await ThreadsTableTestHelper.addThread({ title: 'Lorem' });
@@ -103,10 +103,10 @@ describe('CommentRepositoryPostgres', () => {
       await UsersTableTestHelper.addUser({ username: 'dicoding' });
       await ThreadsTableTestHelper.addThread({ title: 'Lorem' });
       await CommentsTableTestHelper.addComment({ content: 'Lorem' });
-      const threadRepositoryPostgres = new CommentRepositoryPostgres(pool, {});
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, {});
 
       // Action & Assert
-      await expect(threadRepositoryPostgres.verifyCommentOwner('comment-123','user-123'))
+      await expect(commentRepositoryPostgres.verifyCommentOwner('comment-123','user-123'))
         .resolves
         .not.toThrow();
     });
@@ -116,10 +116,10 @@ describe('CommentRepositoryPostgres', () => {
       await UsersTableTestHelper.addUser({ username: 'dicoding' });
       await ThreadsTableTestHelper.addThread({ title: 'Lorem' });
       await CommentsTableTestHelper.addComment({ content: 'Lorem' });
-      const threadRepositoryPostgres = new CommentRepositoryPostgres(pool, {});
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, {});
 
       // Action & Assert
-      await expect(threadRepositoryPostgres.verifyCommentOwner('comment-999','user-123'))
+      await expect(commentRepositoryPostgres.verifyCommentOwner('comment-999','user-123'))
         .rejects
         .toThrowError(NotFoundError);
     });
@@ -129,10 +129,10 @@ describe('CommentRepositoryPostgres', () => {
       await UsersTableTestHelper.addUser({ username: 'dicoding' });
       await ThreadsTableTestHelper.addThread({ title: 'Lorem' });
       await CommentsTableTestHelper.addComment({ content: 'Lorem' });
-      const threadRepositoryPostgres = new CommentRepositoryPostgres(pool, {});
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, {});
 
       // Action & Assert
-      await expect(threadRepositoryPostgres.verifyCommentOwner('comment-123','user-999'))
+      await expect(commentRepositoryPostgres.verifyCommentOwner('comment-123','user-999'))
         .rejects
         .toThrowError(AuthorizationError);
     });

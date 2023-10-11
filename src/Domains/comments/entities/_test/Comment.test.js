@@ -39,14 +39,14 @@ describe('Comment entities', () => {
     };
 
     // Action  
-    const newComment = new Comment(payload);
+    const comment = new Comment(payload);
 
     // Assert
-    expect(newComment).toBeInstanceOf(Comment);
-    expect(newComment.id).toBe(payload.id);
-    expect(newComment.username).toBe(payload.username);
-    expect(newComment.date).toBe(payload.date);
-    expect(newComment.content).toBe(payload.content);
+    expect(comment).toBeInstanceOf(Comment);
+    expect(comment.id).toBe(payload.id);
+    expect(comment.username).toBe(payload.username);
+    expect(comment.date).toBe(payload.date);
+    expect(comment.content).toBe(payload.content);
   });
 
   it('should create Comment entities correctly when is delete', () => {

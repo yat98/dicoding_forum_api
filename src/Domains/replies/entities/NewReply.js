@@ -14,7 +14,7 @@ class NewReply {
       throw new Error('NEW_REPLY.NOT_CONTAIN_NEEDED_PROPERTY');
     }
 
-    if (typeof content !== 'string' || typeof content !== 'string' || typeof owner !== 'string') {
+    if (typeof commentId !== 'string' || typeof content !== 'string' || typeof owner !== 'string') {
       throw new Error('NEW_REPLY.NOT_MEET_DATA_TYPE_SPECIFICATION');
     }
   }
