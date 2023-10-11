@@ -1,8 +1,7 @@
-const CommentRepository = require("../../../Domains/comments/CommentRepository");
-const ReplyRepository = require("../../../Domains/replies/ReplyRepository");
-const ThreadRepository = require("../../../Domains/threads/ThreadRepository");
-const DeleteCommentUseCase = require("../DeleteCommentUseCase");
-const DeleteReplyUseCase = require("../DeleteReplyUseCase");
+const CommentRepository = require('../../../Domains/comments/CommentRepository');
+const ReplyRepository = require('../../../Domains/replies/ReplyRepository');
+const ThreadRepository = require('../../../Domains/threads/ThreadRepository');
+const DeleteReplyUseCase = require('../DeleteReplyUseCase');
 
 describe('DeleteReplyUseCase', () => {
   it('should throw error if use case payload not contain needed property', async () => {
@@ -90,7 +89,6 @@ describe('DeleteReplyUseCase', () => {
     mockThreadRepository.verifyThreadExists = jest.fn()
       .mockImplementation(() => Promise.resolve());
 
-
     const deleteReplyUseCase = new DeleteReplyUseCase({
       threadRepository: mockThreadRepository,
       commentRepository: mockCommentRepository,
@@ -98,7 +96,7 @@ describe('DeleteReplyUseCase', () => {
     });
 
     // Action
-    await deleteReplyUseCase.execute(useCasePayload)
+    await deleteReplyUseCase.execute(useCasePayload);
 
     // Assert
     expect(mockReplyRepository.verifyReplyOwner).toBeCalledWith('reply-123', 'user-123');

@@ -1,11 +1,11 @@
-const AddedComment = require("../AddedComment");
+const AddedComment = require('../AddedComment');
 
-describe('AddedComment entities', () => { 
+describe('AddedComment entities', () => {
   it('should throw error when payload not contain needed property', () => {
     // Arrange
     const payload = {
       content: 'Lorem ipsum sit dolor',
-      owner: 'user-123'
+      owner: 'user-123',
     };
 
     // Action & Assert
@@ -32,7 +32,7 @@ describe('AddedComment entities', () => {
       owner: 'user-123',
     };
 
-    // Action  
+    // Action
     const addedThread = new AddedComment(payload);
 
     // Assert

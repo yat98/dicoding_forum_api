@@ -1,8 +1,8 @@
-const ThreadsTableTestHelper = require("../../../../tests/ThreadsTableTestHelper");
-const UsersTableTestHelper = require("../../../../tests/UsersTableTestHelper");
-const container = require("../../container");
-const pool = require("../../database/postgres/pool");
-const createServer = require("../createServer");
+const ThreadsTableTestHelper = require('../../../../tests/ThreadsTableTestHelper');
+const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
+const container = require('../../container');
+const pool = require('../../database/postgres/pool');
+const createServer = require('../createServer');
 
 describe('/threads endpoint', () => {
   afterAll(async () => {
@@ -42,7 +42,7 @@ describe('/threads endpoint', () => {
         url: '/authentications',
         payload: requestPayload,
       });
-      const accessToken = response.result.data.accessToken;
+      const { accessToken } = response.result.data;
 
       // Action
       response = await server.inject({
@@ -90,7 +90,7 @@ describe('/threads endpoint', () => {
         url: '/authentications',
         payload: requestPayload,
       });
-      const accessToken = response.result.data.accessToken;
+      const { accessToken } = response.result.data;
 
       // Action
       response = await server.inject({
@@ -136,7 +136,7 @@ describe('/threads endpoint', () => {
         url: '/authentications',
         payload: requestPayload,
       });
-      const accessToken = response.result.data.accessToken;
+      const { accessToken } = response.result.data;
 
       // Action
       response = await server.inject({
@@ -182,7 +182,6 @@ describe('/threads endpoint', () => {
         url: '/authentications',
         payload: requestPayload,
       });
-      const accessToken = response.result.data.accessToken;
 
       // Action
       response = await server.inject({
@@ -212,6 +211,9 @@ describe('/threads endpoint', () => {
       const commentRequestPayload = {
         content: 'Lorem ipsum site dolor',
       };
+      const replyRequestPayload = {
+        content: 'Lorem ipsum site dolor',
+      };
       const server = await createServer(container);
       // add user
       let response = await server.inject({
@@ -229,7 +231,7 @@ describe('/threads endpoint', () => {
         url: '/authentications',
         payload: requestPayload,
       });
-      const accessToken = response.result.data.accessToken;
+      const { accessToken } = response.result.data;
       // add thread
       response = await server.inject({
         method: 'POST',
@@ -264,6 +266,22 @@ describe('/threads endpoint', () => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
+      response = await server.inject({
+        method: 'POST',
+        url: `/threads/${threadId}/comments/${commentId}/replies`,
+        payload: replyRequestPayload,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      const replyId = response.result.data.addedReply.id;
+      response = await server.inject({
+        method: 'DELETE',
+        url: `/threads/${threadId}/comments/${commentId}/replies/${replyId}`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
       // Action
       response = await server.inject({
@@ -283,6 +301,8 @@ describe('/threads endpoint', () => {
       expect(responseJson.data.thread.comments).toBeDefined();
       expect(responseJson.data.thread.comments.length).toBe(2);
       expect(responseJson.data.thread.comments[1].content).toBe('**komentar telah dihapus**');
+      expect(responseJson.data.thread.comments[1].replies).toBeDefined();
+      expect(responseJson.data.thread.comments[1].replies[0].content).toBe('**balasan telah dihapus**');
     });
   });
 });

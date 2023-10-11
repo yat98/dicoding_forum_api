@@ -1,11 +1,11 @@
-const AddedThread = require("../AddedThread");
+const AddedThread = require('../AddedThread');
 
-describe('AddedThread entities', () => { 
+describe('AddedThread entities', () => {
   it('should throw error when payload not contain needed property', () => {
     // Arrange
     const payload = {
       title: 'Lorem',
-      owner: 'John Doe'
+      owner: 'John Doe',
     };
 
     // Action & Assert
@@ -32,7 +32,7 @@ describe('AddedThread entities', () => {
       owner: 'John Doe',
     };
 
-    // Action  
+    // Action
     const addedThread = new AddedThread(payload);
 
     // Assert

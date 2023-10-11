@@ -1,9 +1,9 @@
-const NotFoundError = require("../../../Commons/exceptions/NotFoundError");
-const CommentRepository = require("../../../Domains/comments/CommentRepository");
-const AddedComment = require("../../../Domains/comments/entities/AddedComment");
-const NewComment = require("../../../Domains/comments/entities/NewComment");
-const ThreadRepository = require("../../../Domains/threads/ThreadRepository");
-const AddCommentUseCase = require("../AddCommentUseCase");
+const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
+const CommentRepository = require('../../../Domains/comments/CommentRepository');
+const AddedComment = require('../../../Domains/comments/entities/AddedComment');
+const NewComment = require('../../../Domains/comments/entities/NewComment');
+const ThreadRepository = require('../../../Domains/threads/ThreadRepository');
+const AddCommentUseCase = require('../AddCommentUseCase');
 
 describe('AddCommentUseCase', () => {
   it('should throw error when thread not exists', async () => {
@@ -34,7 +34,8 @@ describe('AddCommentUseCase', () => {
     });
 
     // Action & Assert
-    await expect(() => addCommentUseCase.execute(useCasePayload)).rejects.toThrowError(NotFoundError);
+    await expect(() => addCommentUseCase.execute(useCasePayload))
+      .rejects.toThrowError(NotFoundError);
     expect(mockCommentRepository.addComment).not.toBeCalled();
   });
 

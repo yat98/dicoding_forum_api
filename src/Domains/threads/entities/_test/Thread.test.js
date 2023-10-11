@@ -1,6 +1,6 @@
-const Thread = require("../Thread");
+const Thread = require('../Thread');
 
-describe('Thread entities', () => { 
+describe('Thread entities', () => {
   it('should throw error when payload not contain needed property', () => {
     // Arrange
     const payload = {
@@ -38,7 +38,7 @@ describe('Thread entities', () => {
       username: 'dicoding',
     };
 
-    // Action  
+    // Action
     const thread = new Thread(payload);
 
     // Assert

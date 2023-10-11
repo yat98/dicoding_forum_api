@@ -1,3 +1,6 @@
+/* eslint-disable require-await */
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-unused-vars */
 class UserRepository {
   async addUser(registerUser) {
     throw new Error('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');

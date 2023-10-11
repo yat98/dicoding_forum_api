@@ -1,8 +1,8 @@
-const AuthorizationError = require("../../Commons/exceptions/AuthorizationError");
-const NotFoundError = require("../../Commons/exceptions/NotFoundError");
-const CommentRepository = require("../../Domains/comments/CommentRepository");
-const AddedComment = require("../../Domains/comments/entities/AddedComment");
-const Comment = require("../../Domains/comments/entities/Comment");
+const AuthorizationError = require('../../Commons/exceptions/AuthorizationError');
+const NotFoundError = require('../../Commons/exceptions/NotFoundError');
+const CommentRepository = require('../../Domains/comments/CommentRepository');
+const AddedComment = require('../../Domains/comments/entities/AddedComment');
+const Comment = require('../../Domains/comments/entities/Comment');
 
 class CommentRepositoryPostgres extends CommentRepository {
   constructor(pool, idGenerator) {
@@ -74,7 +74,7 @@ class CommentRepositoryPostgres extends CommentRepository {
 
     const result = await this._pool.query(query);
 
-    if(!result.rowCount) throw new NotFoundError('komen tidak ditemukan');
+    if (!result.rowCount) throw new NotFoundError('komen tidak ditemukan');
   }
 }
 

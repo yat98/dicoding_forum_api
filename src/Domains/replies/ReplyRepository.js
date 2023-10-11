@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable require-await */
+/* eslint-disable class-methods-use-this */
 class ReplyRepository {
   async addReply(newReply) {
     throw new Error('REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED');

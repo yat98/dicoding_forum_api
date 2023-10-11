@@ -2,7 +2,9 @@
 const pool = require('../src/Infrastructures/database/postgres/pool');
 
 const RepliesTableTestHelper = {
-  async addReply({ id='reply-123', commentId='comment-123', owner='user-123', content='Lorem ipsum sit dolor', date=new Date().toISOString, isDelete = 'false'}) {
+  async addReply({
+    id = 'reply-123', commentId = 'comment-123', owner = 'user-123', content = 'Lorem ipsum sit dolor', date = new Date().toISOString, isDelete = 'false',
+  }) {
     const query = {
       text: 'INSERT INTO replies VALUES($1, $2, $3, $4, $5, $6)',
       values: [id, commentId, owner, content, date, isDelete],
@@ -11,8 +13,12 @@ const RepliesTableTestHelper = {
     await pool.query(query);
   },
 
-  async addDeleteReply({ id='reply-123', commentId='comment-123', owner='user-123', content='Lorem ipsum sit dolor', date=new Date().toISOString}) {
-    await this.addReply({ id, commentId, owner, content, date, isDelete: 'true'  });
+  async addDeleteReply({
+    id = 'reply-123', commentId = 'comment-123', owner = 'user-123', content = 'Lorem ipsum sit dolor', date = new Date().toISOString,
+  }) {
+    await this.addReply({
+      id, commentId, owner, content, date, isDelete: 'true',
+    });
   },
 
   async findReplyById(id) {

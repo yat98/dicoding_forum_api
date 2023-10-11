@@ -1,5 +1,4 @@
-const ThreadRepository = require("../ThreadRepository");
-
+const ThreadRepository = require('../ThreadRepository');
 
 describe('ThreadRepository interface', () => {
   it('should throw error when invoke unimplemented method', async () => {

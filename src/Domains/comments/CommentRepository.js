@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable require-await */
+/* eslint-disable class-methods-use-this */
 class CommentRepository {
   async addComment(newComment) {
     throw new Error('COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');

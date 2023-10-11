@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 class AddedReply {
   constructor(payload) {
     this._verifyPayload(payload);

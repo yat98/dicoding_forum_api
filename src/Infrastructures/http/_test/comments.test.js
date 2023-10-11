@@ -1,9 +1,9 @@
-const CommentsTableTestHelper = require("../../../../tests/CommentsTableTestHelper");
-const ThreadsTableTestHelper = require("../../../../tests/ThreadsTableTestHelper");
-const UsersTableTestHelper = require("../../../../tests/UsersTableTestHelper");
-const container = require("../../container");
-const pool = require("../../database/postgres/pool");
-const createServer = require("../createServer");
+const CommentsTableTestHelper = require('../../../../tests/CommentsTableTestHelper');
+const ThreadsTableTestHelper = require('../../../../tests/ThreadsTableTestHelper');
+const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
+const container = require('../../container');
+const pool = require('../../database/postgres/pool');
+const createServer = require('../createServer');
 
 describe('/threads/{threadId}/comments endpoint', () => {
   afterAll(async () => {
@@ -47,7 +47,7 @@ describe('/threads/{threadId}/comments endpoint', () => {
         url: '/authentications',
         payload: requestPayload,
       });
-      const accessToken = response.result.data.accessToken;
+      const { accessToken } = response.result.data;
       // add thread
       response = await server.inject({
         method: 'POST',
@@ -108,7 +108,7 @@ describe('/threads/{threadId}/comments endpoint', () => {
         url: '/authentications',
         payload: requestPayload,
       });
-      const accessToken = response.result.data.accessToken;
+      const { accessToken } = response.result.data;
       // add thread
       response = await server.inject({
         method: 'POST',
@@ -167,7 +167,7 @@ describe('/threads/{threadId}/comments endpoint', () => {
         url: '/authentications',
         payload: requestPayload,
       });
-      const accessToken = response.result.data.accessToken;
+      const { accessToken } = response.result.data;
       // add thread
       response = await server.inject({
         method: 'POST',
@@ -229,7 +229,7 @@ describe('/threads/{threadId}/comments endpoint', () => {
         url: '/authentications',
         payload: requestPayload,
       });
-      const accessToken = response.result.data.accessToken;
+      const { accessToken } = response.result.data;
       // add thread
       response = await server.inject({
         method: 'POST',
@@ -280,12 +280,12 @@ describe('/threads/{threadId}/comments endpoint', () => {
         url: '/authentications',
         payload: requestPayload,
       });
-      const accessToken = response.result.data.accessToken;
+      const { accessToken } = response.result.data;
 
       // Action
       response = await server.inject({
         method: 'POST',
-        url: `/threads/xxxx/comments`,
+        url: '/threads/xxxx/comments',
         payload: commentRequestPayload,
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -331,7 +331,7 @@ describe('/threads/{threadId}/comments endpoint', () => {
         url: '/authentications',
         payload: requestPayload,
       });
-      const accessToken = response.result.data.accessToken;
+      const { accessToken } = response.result.data;
       // add thread
       response = await server.inject({
         method: 'POST',
@@ -400,7 +400,7 @@ describe('/threads/{threadId}/comments endpoint', () => {
         url: '/authentications',
         payload: requestPayload,
       });
-      const accessToken = response.result.data.accessToken;
+      const { accessToken } = response.result.data;
       // add thread
       response = await server.inject({
         method: 'POST',
@@ -477,7 +477,7 @@ describe('/threads/{threadId}/comments endpoint', () => {
         url: '/authentications',
         payload: requestPayload,
       });
-      const accessToken = response.result.data.accessToken;
+      const { accessToken } = response.result.data;
       response = await server.inject({
         method: 'POST',
         url: '/authentications',
@@ -551,7 +551,7 @@ describe('/threads/{threadId}/comments endpoint', () => {
         url: '/authentications',
         payload: requestPayload,
       });
-      const accessToken = response.result.data.accessToken;
+      const { accessToken } = response.result.data;
       // add thread
       response = await server.inject({
         method: 'POST',
@@ -599,9 +599,6 @@ describe('/threads/{threadId}/comments endpoint', () => {
         title: 'Lorem',
         body: 'Lorem ipsum site dolor',
       };
-      const commentRequestPayload = {
-        content: 'Lorem ipsum site dolor',
-      };
       const server = await createServer(container);
       // add user
       let response = await server.inject({
@@ -619,7 +616,7 @@ describe('/threads/{threadId}/comments endpoint', () => {
         url: '/authentications',
         payload: requestPayload,
       });
-      const accessToken = response.result.data.accessToken;
+      const { accessToken } = response.result.data;
       // add thread
       response = await server.inject({
         method: 'POST',

@@ -1,4 +1,4 @@
-
+/* eslint-disable require-await */
 const ThreadsHandler = require('./handler');
 const routes = require('./routes');
 

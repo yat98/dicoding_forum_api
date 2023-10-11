@@ -1,8 +1,8 @@
-const AuthorizationError = require("../../Commons/exceptions/AuthorizationError");
-const NotFoundError = require("../../Commons/exceptions/NotFoundError");
-const ReplyRepository = require("../../Domains/replies/ReplyRepository");
-const AddedReply = require("../../Domains/replies/entities/AddedReply");
-const Reply = require("../../Domains/replies/entities/Reply");
+const AuthorizationError = require('../../Commons/exceptions/AuthorizationError');
+const NotFoundError = require('../../Commons/exceptions/NotFoundError');
+const ReplyRepository = require('../../Domains/replies/ReplyRepository');
+const AddedReply = require('../../Domains/replies/entities/AddedReply');
+const Reply = require('../../Domains/replies/entities/Reply');
 
 class ReplyRepositoryPostgres extends ReplyRepository {
   constructor(pool, idGenerator) {
@@ -54,7 +54,7 @@ class ReplyRepositoryPostgres extends ReplyRepository {
 
   async getRepliesByThreadId(threadId) {
     const query = {
-      text: `SELECT replies.id, replies.date, replies.content, replies.is_delete, comments.thread_id, users.username 
+      text: `SELECT replies.id, replies.comment_id, replies.date, replies.content, replies.is_delete, users.username 
           FROM replies
           LEFT JOIN users ON users.id = replies.owner 
           LEFT JOIN comments ON comments.id = replies.comment_id 

@@ -1,6 +1,6 @@
-const NewReply = require("../NewReply");
+const NewReply = require('../NewReply');
 
-describe('NewReply entities', () => { 
+describe('NewReply entities', () => {
   it('should throw error when payload not contain needed property', () => {
     // Arrange
     const payload = {
@@ -32,7 +32,7 @@ describe('NewReply entities', () => {
       owner: 'user-123',
     };
 
-    // Action  
+    // Action
     const newReply = new NewReply(payload);
 
     // Assert

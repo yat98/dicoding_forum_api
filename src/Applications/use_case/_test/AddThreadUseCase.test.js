@@ -1,7 +1,7 @@
-const ThreadRepository = require("../../../Domains/threads/ThreadRepository");
-const AddedThread = require("../../../Domains/threads/entities/AddedThread");
-const NewThread = require("../../../Domains/threads/entities/NewThread");
-const AddThreadUseCase = require("../AddThreadUseCase");
+const ThreadRepository = require('../../../Domains/threads/ThreadRepository');
+const AddedThread = require('../../../Domains/threads/entities/AddedThread');
+const NewThread = require('../../../Domains/threads/entities/NewThread');
+const AddThreadUseCase = require('../AddThreadUseCase');
 
 describe('AddThreadUseCase', () => {
   it('should orchestrating the add thread action correctly', async () => {
@@ -23,7 +23,7 @@ describe('AddThreadUseCase', () => {
       .mockImplementation(() => Promise.resolve(mockAddedThread));
 
     const addThreadUseCase = new AddThreadUseCase({
-      threadRepository: mockThreadRepository
+      threadRepository: mockThreadRepository,
     });
 
     // Action

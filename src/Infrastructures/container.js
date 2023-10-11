@@ -129,7 +129,7 @@ container.register([
         },
       ],
     },
-  }
+  },
 ]);
 
 // registering use cases
@@ -217,7 +217,7 @@ container.register([
           internal: ThreadRepository.name,
         },
       ],
-    }
+    },
   },
   {
     key: AddCommentUseCase.name,
@@ -234,7 +234,7 @@ container.register([
           internal: ThreadRepository.name,
         },
       ],
-    }
+    },
   },
   {
     key: DeleteCommentUseCase.name,
@@ -251,7 +251,7 @@ container.register([
           internal: ThreadRepository.name,
         },
       ],
-    }
+    },
   },
   {
     key: DetailThreadUseCase.name,
@@ -259,6 +259,10 @@ container.register([
     parameter: {
       injectType: 'destructuring',
       dependencies: [
+        {
+          name: 'replyRepository',
+          internal: ReplyRepository.name,
+        },
         {
           name: 'commentRepository',
           internal: CommentRepository.name,
@@ -268,7 +272,7 @@ container.register([
           internal: ThreadRepository.name,
         },
       ],
-    }
+    },
   },
   {
     key: AddReplyUseCase.name,
@@ -289,7 +293,7 @@ container.register([
           internal: ThreadRepository.name,
         },
       ],
-    }
+    },
   },
   {
     key: DeleteReplyUseCase.name,
@@ -310,8 +314,8 @@ container.register([
           internal: ThreadRepository.name,
         },
       ],
-    }
-  }
+    },
+  },
 ]);
 
 module.exports = container;

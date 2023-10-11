@@ -1,16 +1,16 @@
-const CommentsTableTestHelper = require("../../../../tests/CommentsTableTestHelper");
-const RepliesTableTestHelper = require("../../../../tests/RepliesTableTestHelper");
-const ThreadsTableTestHelper = require("../../../../tests/ThreadsTableTestHelper");
-const UsersTableTestHelper = require("../../../../tests/UsersTableTestHelper");
-const AuthorizationError = require("../../../Commons/exceptions/AuthorizationError");
-const NotFoundError = require("../../../Commons/exceptions/NotFoundError");
-const AddedReply = require("../../../Domains/replies/entities/AddedReply");
-const NewReply = require("../../../Domains/replies/entities/NewReply");
-const Reply = require("../../../Domains/replies/entities/Reply");
-const pool = require("../../database/postgres/pool");
-const ReplyRepositoryPostgres = require("../ReplyRepositoryPostgres");
+const CommentsTableTestHelper = require('../../../../tests/CommentsTableTestHelper');
+const RepliesTableTestHelper = require('../../../../tests/RepliesTableTestHelper');
+const ThreadsTableTestHelper = require('../../../../tests/ThreadsTableTestHelper');
+const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
+const AuthorizationError = require('../../../Commons/exceptions/AuthorizationError');
+const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
+const AddedReply = require('../../../Domains/replies/entities/AddedReply');
+const NewReply = require('../../../Domains/replies/entities/NewReply');
+const Reply = require('../../../Domains/replies/entities/Reply');
+const pool = require('../../database/postgres/pool');
+const ReplyRepositoryPostgres = require('../ReplyRepositoryPostgres');
 
-describe('ReplyRepositoryPostgres', () => { 
+describe('ReplyRepositoryPostgres', () => {
   afterEach(async () => {
     await UsersTableTestHelper.cleanTable();
     await ThreadsTableTestHelper.cleanTable();
@@ -74,7 +74,7 @@ describe('ReplyRepositoryPostgres', () => {
     it('should throw NotFoundError when reply not exists', async () => {
       // Arrange
       const replyRepositoryPostgres = new ReplyRepositoryPostgres(pool, {});
-      
+
       // Action & Assert
       await expect(replyRepositoryPostgres.deleteReply('reply-123'))
         .rejects
@@ -98,7 +98,7 @@ describe('ReplyRepositoryPostgres', () => {
       // Assert
       const reply = await RepliesTableTestHelper.findReplyById('reply-123');
       expect(reply).toHaveLength(1);
-      expect(reply[0].is_delete).toBe("true");
+      expect(reply[0].is_delete).toBe('true');
     });
   });
 
@@ -112,7 +112,7 @@ describe('ReplyRepositoryPostgres', () => {
       const replyRepositoryPostgres = new ReplyRepositoryPostgres(pool, {});
 
       // Action & Assert
-      await expect(replyRepositoryPostgres.verifyReplyOwner('reply-123','user-123'))
+      await expect(replyRepositoryPostgres.verifyReplyOwner('reply-123', 'user-123'))
         .resolves
         .not.toThrow();
     });
@@ -125,7 +125,7 @@ describe('ReplyRepositoryPostgres', () => {
       const replyRepositoryPostgres = new ReplyRepositoryPostgres(pool, {});
 
       // Action & Assert
-      await expect(replyRepositoryPostgres.verifyReplyOwner('reply-999','user-123'))
+      await expect(replyRepositoryPostgres.verifyReplyOwner('reply-999', 'user-123'))
         .rejects
         .toThrowError(NotFoundError);
     });
@@ -139,7 +139,7 @@ describe('ReplyRepositoryPostgres', () => {
       const replyRepositoryPostgres = new ReplyRepositoryPostgres(pool, {});
 
       // Action & Assert
-      await expect(replyRepositoryPostgres.verifyReplyOwner('reply-123','user-999'))
+      await expect(replyRepositoryPostgres.verifyReplyOwner('reply-123', 'user-999'))
         .rejects
         .toThrowError(AuthorizationError);
     });
@@ -165,8 +165,8 @@ describe('ReplyRepositoryPostgres', () => {
       const date = new Date().toISOString();
       await UsersTableTestHelper.addUser({ username: 'dicoding' });
       await ThreadsTableTestHelper.addThread({ title: 'Lorem' });
-      await CommentsTableTestHelper.addComment({ content: 'ipsum', date })
-      await RepliesTableTestHelper.addReply({ content: 'dolor', date })
+      await CommentsTableTestHelper.addComment({ content: 'ipsum', date });
+      await RepliesTableTestHelper.addReply({ content: 'dolor', date });
       const replyRepositoryPostgres = new ReplyRepositoryPostgres(pool, {});
 
       // Action
@@ -180,6 +180,7 @@ describe('ReplyRepositoryPostgres', () => {
         date,
         username: 'dicoding',
         is_delete: 'false',
+        comment_id: 'comment-123',
       }));
     });
   });

@@ -1,11 +1,11 @@
-const AddedReply = require("../AddedReply");
+const AddedReply = require('../AddedReply');
 
-describe('AddedReply entities', () => { 
+describe('AddedReply entities', () => {
   it('should throw error when payload not contain needed property', () => {
     // Arrange
     const payload = {
       content: 'Lorem ipsum sit dolor',
-      owner: 'user-123'
+      owner: 'user-123',
     };
 
     // Action & Assert
@@ -32,7 +32,7 @@ describe('AddedReply entities', () => {
       owner: 'user-123',
     };
 
-    // Action  
+    // Action
     const addedReplay = new AddedReply(payload);
 
     // Assert

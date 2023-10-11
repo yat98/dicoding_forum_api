@@ -1,3 +1,4 @@
+/* eslint-disable require-await */
 const UsersHandler = require('./handler');
 const routes = require('./routes');
 

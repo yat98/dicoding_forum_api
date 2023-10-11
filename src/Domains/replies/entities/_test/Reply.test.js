@@ -1,6 +1,6 @@
-const Reply = require("../Reply");
+const Reply = require('../Reply');
 
-describe('Reply entities', () => { 
+describe('Reply entities', () => {
   it('should throw error when payload not contain needed property', () => {
     // Arrange
     const payload = {
@@ -8,6 +8,7 @@ describe('Reply entities', () => {
       username: 'Lorem',
       date: new Date().toISOString(),
       content: 'lorem ipsum',
+      comment_id: 'comment-123',
     };
 
     // Action & Assert
@@ -22,6 +23,7 @@ describe('Reply entities', () => {
       date: new Date().toISOString(),
       content: 'lorem ipsum',
       is_delete: 'false',
+      comment_id: 'comment-123',
     };
 
     // Action & Assert
@@ -36,17 +38,19 @@ describe('Reply entities', () => {
       date: new Date().toISOString(),
       content: 'lorem ipsum',
       is_delete: 'false',
+      comment_id: 'comment-123',
     };
 
-    // Action  
-    const newReply = new Reply(payload);
+    // Action
+    const reply = new Reply(payload);
 
     // Assert
-    expect(newReply).toBeInstanceOf(Reply);
-    expect(newReply.id).toBe(payload.id);
-    expect(newReply.username).toBe(payload.username);
-    expect(newReply.date).toBe(payload.date);
-    expect(newReply.content).toBe(payload.content);
+    expect(reply).toBeInstanceOf(Reply);
+    expect(reply.id).toBe(payload.id);
+    expect(reply.username).toBe(payload.username);
+    expect(reply.date).toBe(payload.date);
+    expect(reply.content).toBe(payload.content);
+    expect(reply.commentId).toBe(payload.comment_id);
   });
 
   it('should create Reply entities correctly when is delete', () => {
@@ -57,9 +61,10 @@ describe('Reply entities', () => {
       date: new Date().toISOString(),
       content: 'lorem ipsum',
       is_delete: 'true',
+      comment_id: 'comment-123',
     };
 
-    // Action  
+    // Action
     const reply = new Reply(payload);
 
     // Assert
@@ -68,5 +73,6 @@ describe('Reply entities', () => {
     expect(reply.username).toBe(payload.username);
     expect(reply.date).toBe(payload.date);
     expect(reply.content).toBe('**balasan telah dihapus**');
+    expect(reply.commentId).toBe(payload.comment_id);
   });
 });

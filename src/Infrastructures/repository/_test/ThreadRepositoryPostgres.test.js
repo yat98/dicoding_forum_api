@@ -1,12 +1,12 @@
-const ThreadsTableTestHelper = require("../../../../tests/ThreadsTableTestHelper");
-const UsersTableTestHelper = require("../../../../tests/UsersTableTestHelper");
-const NotFoundError = require("../../../Commons/exceptions/NotFoundError");
-const AddedThread = require("../../../Domains/threads/entities/AddedThread");
-const NewThread = require("../../../Domains/threads/entities/NewThread");
-const pool = require("../../database/postgres/pool");
-const ThreadRepositoryPostgres = require("../ThreadRepositoryPostgres");
+const ThreadsTableTestHelper = require('../../../../tests/ThreadsTableTestHelper');
+const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
+const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
+const AddedThread = require('../../../Domains/threads/entities/AddedThread');
+const NewThread = require('../../../Domains/threads/entities/NewThread');
+const pool = require('../../database/postgres/pool');
+const ThreadRepositoryPostgres = require('../ThreadRepositoryPostgres');
 
-describe('ThreadRepositoryPostgres', () => { 
+describe('ThreadRepositoryPostgres', () => {
   afterEach(async () => {
     await UsersTableTestHelper.cleanTable();
     await ThreadsTableTestHelper.cleanTable();
@@ -42,7 +42,7 @@ describe('ThreadRepositoryPostgres', () => {
       const newThread = new NewThread({
         title: 'Lorem',
         body: 'Lorem ipsum sit dolor',
-        owner: 'user-123'
+        owner: 'user-123',
       });
       const fakeIdGenerator = () => '123'; // stub!
       const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, fakeIdGenerator);
@@ -59,7 +59,7 @@ describe('ThreadRepositoryPostgres', () => {
     });
   });
 
-  describe('verifyThreadExists function', () => { 
+  describe('verifyThreadExists function', () => {
     it('should throw NotFoundError when thread not exists', async () => {
       // Arrange
       const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {});
@@ -79,7 +79,7 @@ describe('ThreadRepositoryPostgres', () => {
     });
   });
 
-  describe('getThreadById function', () => { 
+  describe('getThreadById function', () => {
     it('should throw NotFoundError when thread not exists', async () => {
       // Arrange
       const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {});

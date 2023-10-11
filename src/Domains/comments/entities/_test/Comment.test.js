@@ -1,6 +1,6 @@
-const Comment = require("../Comment");
+const Comment = require('../Comment');
 
-describe('Comment entities', () => { 
+describe('Comment entities', () => {
   it('should throw error when payload not contain needed property', () => {
     // Arrange
     const payload = {
@@ -38,7 +38,7 @@ describe('Comment entities', () => {
       is_delete: 'false',
     };
 
-    // Action  
+    // Action
     const comment = new Comment(payload);
 
     // Assert
@@ -59,7 +59,7 @@ describe('Comment entities', () => {
       is_delete: 'true',
     };
 
-    // Action  
+    // Action
     const comment = new Comment(payload);
 
     // Assert

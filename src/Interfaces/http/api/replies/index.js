@@ -1,3 +1,4 @@
+/* eslint-disable require-await */
 const RepliesHandler = require('./handler');
 const routes = require('./routes');
 

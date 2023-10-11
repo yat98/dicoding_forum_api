@@ -1,6 +1,8 @@
-const DetailThread = require("../DetailThread");
+const Comment = require('../../../comments/entities/Comment');
+const Reply = require('../../../replies/entities/Reply');
+const DetailThread = require('../DetailThread');
 
-describe('DetailThread entities', () => { 
+describe('DetailThread entities', () => {
   it('should throw error when payload not contain needed property', () => {
     // Arrange
     const payload = {
@@ -27,7 +29,8 @@ describe('DetailThread entities', () => {
         date: new Date().toISOString(),
         username: 'dicoding',
       },
-      comments: 'this is comment'
+      comments: 'this is comment',
+      replies: [],
     };
 
     // Action & Assert
@@ -36,18 +39,37 @@ describe('DetailThread entities', () => {
 
   it('should create DetailThread entities correctly', () => {
     // Arrange
+    const date = new Date().toISOString();
     const payload = {
       thread: {
         id: 'thread-123',
         title: 'Lorem',
         body: 'lorem ipsum sit dolor',
-        date: new Date().toISOString(),
+        date,
         username: 'dicoding',
       },
-      comments: [],
+      comments: [
+        new Comment({
+          id: 'comment-123',
+          username: 'dicoding',
+          date,
+          content: 'ipsum',
+          is_delete: 'false',
+        }),
+      ],
+      replies: [
+        new Reply({
+          id: 'reply-123',
+          username: 'dicoding',
+          date,
+          content: 'dolor',
+          is_delete: 'false',
+          comment_id: 'comment-123',
+        }),
+      ],
     };
 
-    // Action  
+    // Action
     const detailThread = new DetailThread(payload);
 
     // Assert
@@ -57,6 +79,29 @@ describe('DetailThread entities', () => {
     expect(detailThread.thread.body).toBe(payload.thread.body);
     expect(detailThread.thread.date).toBe(payload.thread.date);
     expect(detailThread.thread.username).toBe(payload.thread.username);
-    expect(detailThread.thread.comments).toBe(payload.comments);
+    expect(detailThread.thread.comments).toEqual([
+      {
+        id: 'comment-123',
+        username: 'dicoding',
+        date,
+        content: 'ipsum',
+        replies: [
+          {
+            id: 'reply-123',
+            username: 'dicoding',
+            date,
+            content: 'dolor',
+          },
+        ],
+      },
+    ]);
+    expect(detailThread.thread.comments[0].replies).toEqual([
+      {
+        id: 'reply-123',
+        username: 'dicoding',
+        date,
+        content: 'dolor',
+      },
+    ]);
   });
 });

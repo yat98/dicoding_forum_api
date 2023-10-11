@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 class DeleteReplyUseCase {
   constructor({
     threadRepository,
@@ -11,7 +12,9 @@ class DeleteReplyUseCase {
 
   async execute(useCasePayload) {
     this._validatePayload(useCasePayload);
-    const { threadId, commentId, replyId, owner } = useCasePayload;
+    const {
+      threadId, commentId, replyId, owner,
+    } = useCasePayload;
     await this._replyRepository.verifyReplyOwner(replyId, owner);
     await this._commentRepository.verifyCommentExists(commentId);
     await this._threadRepository.verifyThreadExists(threadId);
@@ -19,16 +22,18 @@ class DeleteReplyUseCase {
   }
 
   _validatePayload(payload) {
-    const { threadId, commentId, replyId, owner } = payload;
+    const {
+      threadId, commentId, replyId, owner,
+    } = payload;
     if (!threadId || !commentId || !replyId || !owner) {
       throw new Error('DELETE_REPLY_USE_CASE.PAYLOAD_NOT_CONTAIN_NEEDED_PROPERTY');
     }
 
     if (
-      typeof threadId !== 'string' || 
-      typeof commentId !== 'string' || 
-      typeof replyId !== 'string' ||
-      typeof owner !== 'string'
+      typeof threadId !== 'string'
+      || typeof commentId !== 'string'
+      || typeof replyId !== 'string'
+      || typeof owner !== 'string'
     ) {
       throw new Error('DELETE_REPLY_USE_CASE.PAYLOAD_NOT_MEET_DATA_TYPE_SPECIFICATION');
     }
