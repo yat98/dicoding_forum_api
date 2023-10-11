@@ -174,4 +174,25 @@ describe('CommentRepositoryPostgres', () => {
       }));
     });
   });
+
+  describe('verifyCommentExists function', () => { 
+    it('should throw NotFoundError when comment not exists', async () => {
+      // Arrange
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, {});
+
+      // Action & Assert
+      await expect(commentRepositoryPostgres.verifyCommentExists('xxxx')).rejects.toThrowError(NotFoundError);
+    });
+
+    it('should not throw NotFoundError when comment exists', async () => {
+      // Arrange
+      await UsersTableTestHelper.addUser({ username: 'dicoding' });
+      await ThreadsTableTestHelper.addThread({ title: 'Lorem' });
+      await CommentsTableTestHelper.addComment({ content: 'ipsum' });
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, {});
+
+      // Action & Assert
+      await expect(commentRepositoryPostgres.verifyCommentExists('comment-123')).resolves.not.toThrowError(NotFoundError);
+    });
+  });
 });
