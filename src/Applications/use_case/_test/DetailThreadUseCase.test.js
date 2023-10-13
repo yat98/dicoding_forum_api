@@ -70,6 +70,7 @@ describe('AddThreadUseCase', () => {
     // Assert
     expect(mockThreadRepository.getThreadById).toBeCalledWith('thread-123');
     expect(mockCommentRepository.getCommentsByThreadId).toBeCalledWith('thread-123');
+    expect(mockReplyRepository.getRepliesByThreadId).toBeCalledWith('thread-123');
     expect(detailThread).toEqual(new DetailThread({
       thread: mockThread,
       comments: [

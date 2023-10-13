@@ -157,6 +157,7 @@ describe('ReplyRepositoryPostgres', () => {
       const replyRepository = await replyRepositoryPostgres.getRepliesByThreadId('thread-123');
 
       // Assert
+      expect(replyRepository.length).toEqual(0);
       expect(replyRepository).toEqual([]);
     });
 

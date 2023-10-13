@@ -36,6 +36,7 @@ describe('AddCommentUseCase', () => {
     // Action & Assert
     await expect(() => addCommentUseCase.execute(useCasePayload))
       .rejects.toThrowError(NotFoundError);
+    expect(mockThreadRepository.verifyThreadExists).toBeCalledWith('thread-xxx');
     expect(mockCommentRepository.addComment).not.toBeCalled();
   });
 

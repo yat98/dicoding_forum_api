@@ -3,6 +3,7 @@ const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
 const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 const AddedThread = require('../../../Domains/threads/entities/AddedThread');
 const NewThread = require('../../../Domains/threads/entities/NewThread');
+const Thread = require('../../../Domains/threads/entities/Thread');
 const pool = require('../../database/postgres/pool');
 const ThreadRepositoryPostgres = require('../ThreadRepositoryPostgres');
 
@@ -90,12 +91,21 @@ describe('ThreadRepositoryPostgres', () => {
 
     it('should not throw NotFoundError when thread exists', async () => {
       // Arrange
+      const date = new Date().toISOString();
       await UsersTableTestHelper.addUser({ username: 'dicoding' });
-      await ThreadsTableTestHelper.addThread({ title: 'Lorem' });
+      await ThreadsTableTestHelper.addThread({ title: 'Lorem', date });
       const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {});
 
       // Action & Assert
+      const thread = await threadRepositoryPostgres.getThreadById('thread-123');
       await expect(threadRepositoryPostgres.getThreadById('thread-123')).resolves.not.toThrowError(NotFoundError);
+      expect(thread).toEqual(new Thread({
+        id: 'thread-123',
+        title: 'Lorem',
+        body: 'Lorem ipsum sit dolor',
+        date,
+        username: 'dicoding',
+      }));
     });
   });
 });

@@ -42,6 +42,7 @@ describe('DeleteReply entities', () => {
     expect(deleteReply).toBeInstanceOf(DeleteReply);
     expect(deleteReply.threadId).toBe(payload.threadId);
     expect(deleteReply.commentId).toBe(payload.commentId);
+    expect(deleteReply.replyId).toBe(payload.replyId);
     expect(deleteReply.owner).toBe(payload.owner);
   });
 });

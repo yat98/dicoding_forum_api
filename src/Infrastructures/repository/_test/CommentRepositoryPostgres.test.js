@@ -31,14 +31,14 @@ describe('CommentRepositoryPostgres', () => {
         owner: 'user-123',
       });
       const fakeIdGenerator = () => '123'; // stub!
-      const threadRepositoryPostgres = new CommentRepositoryPostgres(pool, fakeIdGenerator);
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, fakeIdGenerator);
 
       // Action
-      await threadRepositoryPostgres.addComment(newComment);
+      await commentRepositoryPostgres.addComment(newComment);
 
       // Assert
-      const thread = await CommentsTableTestHelper.findCommentById('comment-123');
-      expect(thread).toHaveLength(1);
+      const comment = await CommentsTableTestHelper.findCommentById('comment-123');
+      expect(comment).toHaveLength(1);
     });
 
     it('should return added comment correctly', async () => {
@@ -52,10 +52,10 @@ describe('CommentRepositoryPostgres', () => {
         owner: 'user-123',
       });
       const fakeIdGenerator = () => '123'; // stub!
-      const threadRepositoryPostgres = new CommentRepositoryPostgres(pool, fakeIdGenerator);
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, fakeIdGenerator);
 
       // Action
-      const addedComment = await threadRepositoryPostgres.addComment(newComment);
+      const addedComment = await commentRepositoryPostgres.addComment(newComment);
 
       // Assert
       expect(addedComment).toStrictEqual(new AddedComment({
@@ -75,8 +75,8 @@ describe('CommentRepositoryPostgres', () => {
       await expect(commentRepositoryPostgres.deleteComment('comment-123'))
         .rejects
         .toThrowError(NotFoundError);
-      const thread = await CommentsTableTestHelper.findCommentById('comment-123');
-      expect(thread[0]).toBeUndefined();
+      const comment = await CommentsTableTestHelper.findCommentById('comment-123');
+      expect(comment[0]).toBeUndefined();
     });
 
     it('should delete comment using soft delete', async () => {
@@ -91,9 +91,9 @@ describe('CommentRepositoryPostgres', () => {
       await commentRepositoryPostgres.deleteComment('comment-123');
 
       // Assert
-      const thread = await CommentsTableTestHelper.findCommentById('comment-123');
-      expect(thread).toHaveLength(1);
-      expect(thread[0].is_delete).toBe('true');
+      const comment = await CommentsTableTestHelper.findCommentById('comment-123');
+      expect(comment).toHaveLength(1);
+      expect(comment[0].is_delete).toBe('true');
     });
   });
 
