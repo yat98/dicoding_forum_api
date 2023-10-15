@@ -24,7 +24,7 @@ jobs:
       run: |
         npm install
         npm run migrate up
-        npm run test
+        npm run test:coverage
       env:
         CI: true
         PGUSER_TEST: ${{ secrets.PGUSER_TEST }}
@@ -40,3 +40,7 @@ jobs:
         ACCESS_TOKEN_KEY: ${{ secrets.ACCESS_TOKEN_KEY }}
         REFRESH_TOKEN_KEY: ${{ secrets.REFRESH_TOKEN_KEY }}
         ACCESS_TOKEN_AGE: ${{ secrets.ACCESS_TOKEN_AGE }}
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
