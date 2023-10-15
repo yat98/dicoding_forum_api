@@ -1,4 +1,6 @@
+const CommentsTableTestHelper = require('../../../../tests/CommentsTableTestHelper');
 const ThreadsTableTestHelper = require('../../../../tests/ThreadsTableTestHelper');
+const UserCommentLikesTableTestHelper = require('../../../../tests/UserCommentLikesTableTestHelper');
 const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
 const container = require('../../container');
 const pool = require('../../database/postgres/pool');
@@ -12,6 +14,8 @@ describe('/threads endpoint', () => {
   afterEach(async () => {
     await ThreadsTableTestHelper.cleanTable();
     await UsersTableTestHelper.cleanTable();
+    await CommentsTableTestHelper.cleanTable();
+    await UserCommentLikesTableTestHelper.cleanTable();
   });
 
   describe('when POST /threads', () => {
@@ -157,34 +161,14 @@ describe('/threads endpoint', () => {
 
     it('should response 401 without authentication', async () => {
       // Arrange
-      const requestPayload = {
-        username: 'dicoding',
-        password: 'secret',
-      };
       const threadRequestPayload = {
         title: 'Lorem',
         body: 'Lorem ipsum site dolor',
       };
       const server = await createServer(container);
-      // add user
-      let response = await server.inject({
-        method: 'POST',
-        url: '/users',
-        payload: {
-          username: 'dicoding',
-          password: 'secret',
-          fullname: 'Dicoding Indonesia',
-        },
-      });
-      // login & get token
-      response = await server.inject({
-        method: 'POST',
-        url: '/authentications',
-        payload: requestPayload,
-      });
 
       // Action
-      response = await server.inject({
+      const response = await server.inject({
         method: 'POST',
         url: '/threads',
         payload: threadRequestPayload,
@@ -250,14 +234,6 @@ describe('/threads endpoint', () => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      response = await server.inject({
-        method: 'POST',
-        url: `/threads/${threadId}/comments`,
-        payload: commentRequestPayload,
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
       const commentId = response.result.data.addedComment.id;
       response = await server.inject({
         method: 'DELETE',
@@ -282,6 +258,13 @@ describe('/threads endpoint', () => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
+      response = await server.inject({
+        method: 'PUT',
+        url: `/threads/${threadId}/comments/${commentId}/likes`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
       // Action
       response = await server.inject({
@@ -299,10 +282,12 @@ describe('/threads endpoint', () => {
       expect(responseJson.data.thread.date).toBeDefined();
       expect(responseJson.data.thread.username).toBeDefined();
       expect(responseJson.data.thread.comments).toBeDefined();
-      expect(responseJson.data.thread.comments.length).toBe(2);
-      expect(responseJson.data.thread.comments[1].content).toBe('**komentar telah dihapus**');
-      expect(responseJson.data.thread.comments[1].replies).toBeDefined();
-      expect(responseJson.data.thread.comments[1].replies[0].content).toBe('**balasan telah dihapus**');
+      expect(responseJson.data.thread.comments.length).toBe(1);
+      expect(responseJson.data.thread.comments[0].likeCount).toBeDefined();
+      expect(responseJson.data.thread.comments[0].likeCount).toBe(1);
+      expect(responseJson.data.thread.comments[0].content).toBe('**komentar telah dihapus**');
+      expect(responseJson.data.thread.comments[0].replies).toBeDefined();
+      expect(responseJson.data.thread.comments[0].replies[0].content).toBe('**balasan telah dihapus**');
     });
   });
 });

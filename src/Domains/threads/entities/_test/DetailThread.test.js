@@ -55,6 +55,7 @@ describe('DetailThread entities', () => {
           date,
           content: 'ipsum',
           is_delete: 'false',
+          count: '1',
         }),
       ],
       replies: [
@@ -93,6 +94,7 @@ describe('DetailThread entities', () => {
             content: 'dolor',
           },
         ],
+        likeCount: 1,
       },
     ]);
     expect(detailThread.thread.comments[0].replies).toEqual([
