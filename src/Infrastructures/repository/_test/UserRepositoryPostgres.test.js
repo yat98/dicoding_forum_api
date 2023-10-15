@@ -33,6 +33,26 @@ describe('UserRepositoryPostgres', () => {
     });
   });
 
+  describe('verifyUserExists function', () => {
+    it('should throw InvariantError when user not found', async () => {
+      // Arrange
+      await UsersTableTestHelper.addUser({ username: 'dicoding' }); // memasukan user baru dengan username dicoding
+      const userRepositoryPostgres = new UserRepositoryPostgres(pool, {});
+
+      // Action & Assert
+      await expect(userRepositoryPostgres.verifyUserExists('usernotfoundid')).rejects.toThrowError(InvariantError);
+    });
+
+    it('should not throw InvariantError when user exists', async () => {
+      // Arrange
+      await UsersTableTestHelper.addUser({ username: 'dicoding' }); // memasukan user baru dengan username dicoding
+      const userRepositoryPostgres = new UserRepositoryPostgres(pool, {});
+
+      // Action & Assert
+      await expect(userRepositoryPostgres.verifyUserExists('user-123')).resolves.not.toThrowError(InvariantError);
+    });
+  });
+
   describe('addUser function', () => {
     it('should persist register user and return registered user correctly', async () => {
       // Arrange
