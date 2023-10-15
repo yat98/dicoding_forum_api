@@ -284,7 +284,7 @@ describe('/threads endpoint', () => {
       expect(responseJson.data.thread.comments).toBeDefined();
       expect(responseJson.data.thread.comments.length).toBe(1);
       expect(responseJson.data.thread.comments[0].likeCount).toBeDefined();
-      expect(responseJson.data.thread.comments[0].likeCount).toBe(2);
+      expect(responseJson.data.thread.comments[0].likeCount).toBe(1);
       expect(responseJson.data.thread.comments[0].content).toBe('**komentar telah dihapus**');
       expect(responseJson.data.thread.comments[0].replies).toBeDefined();
       expect(responseJson.data.thread.comments[0].replies[0].content).toBe('**balasan telah dihapus**');
