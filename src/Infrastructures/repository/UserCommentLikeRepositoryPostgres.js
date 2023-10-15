@@ -1,7 +1,7 @@
 const InvariantError = require('../../Commons/exceptions/InvariantError');
-const UserCommentLikesRepository = require('../../Domains/userCommentLikes/UserCommentLikesRepository');
+const UserCommentLikesRepository = require('../../Domains/userCommentLikes/UserCommentLikeRepository');
 
-class UserCommentLikesRepositoryPostgres extends UserCommentLikesRepository {
+class UserCommentLikeRepositoryPostgres extends UserCommentLikesRepository {
   constructor(pool, idGenerator) {
     super();
     this._pool = pool;
@@ -42,4 +42,4 @@ class UserCommentLikesRepositoryPostgres extends UserCommentLikesRepository {
   }
 }
 
-module.exports = UserCommentLikesRepositoryPostgres;
+module.exports = UserCommentLikeRepositoryPostgres;

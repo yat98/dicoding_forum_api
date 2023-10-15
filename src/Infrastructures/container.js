@@ -35,6 +35,9 @@ const ReplyRepository = require('../Domains/replies/ReplyRepository');
 const ReplyRepositoryPostgres = require('./repository/ReplyRepositoryPostgres');
 const AddReplyUseCase = require('../Applications/use_case/AddReplyUseCase');
 const DeleteReplyUseCase = require('../Applications/use_case/DeleteReplyUseCase');
+const LikeCommentUseCase = require('../Applications/use_case/LikeCommentUseCase');
+const UserCommentLikeRepository = require('../Domains/userCommentLikes/UserCommentLikeRepository');
+const UserCommentLikeRepositoryPostgres = require('./repository/UserCommentLikeRepositoryPostgres');
 
 // creating container
 const container = createContainer();
@@ -119,6 +122,20 @@ container.register([
   {
     key: ReplyRepository.name,
     Class: ReplyRepositoryPostgres,
+    parameter: {
+      dependencies: [
+        {
+          concrete: pool,
+        },
+        {
+          concrete: nanoid,
+        },
+      ],
+    },
+  },
+  {
+    key: UserCommentLikeRepository.name,
+    Class: UserCommentLikeRepositoryPostgres,
     parameter: {
       dependencies: [
         {
@@ -228,7 +245,7 @@ container.register([
         {
           name: 'commentRepository',
           internal: CommentRepository.name,
-        },,
+        },
         {
           name: 'threadRepository',
           internal: ThreadRepository.name,
@@ -245,7 +262,7 @@ container.register([
         {
           name: 'commentRepository',
           internal: CommentRepository.name,
-        },,
+        },
         {
           name: 'threadRepository',
           internal: ThreadRepository.name,
@@ -266,7 +283,7 @@ container.register([
         {
           name: 'commentRepository',
           internal: CommentRepository.name,
-        },,
+        },
         {
           name: 'threadRepository',
           internal: ThreadRepository.name,
@@ -287,7 +304,7 @@ container.register([
         {
           name: 'commentRepository',
           internal: CommentRepository.name,
-        },,
+        },
         {
           name: 'threadRepository',
           internal: ThreadRepository.name,
@@ -308,10 +325,35 @@ container.register([
         {
           name: 'commentRepository',
           internal: CommentRepository.name,
-        },,
+        },
         {
           name: 'threadRepository',
           internal: ThreadRepository.name,
+        },
+      ],
+    },
+  },
+  {
+    key: LikeCommentUseCase.name,
+    Class: LikeCommentUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'commentRepository',
+          internal: CommentRepository.name,
+        },
+        {
+          name: 'threadRepository',
+          internal: ThreadRepository.name,
+        },
+        {
+          name: 'userRepository',
+          internal: UserRepository.name,
+        },
+        {
+          name: 'userCommentLikeRepository',
+          internal: UserCommentLikeRepository.name,
         },
       ],
     },

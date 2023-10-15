@@ -1,6 +1,6 @@
 const CommentRepository = require('../../../Domains/comments/CommentRepository');
 const ThreadRepository = require('../../../Domains/threads/ThreadRepository');
-const UserCommentLikesRepository = require('../../../Domains/userCommentLikes/UserCommentLikesRepository');
+const UserCommentLikesRepository = require('../../../Domains/userCommentLikes/UserCommentLikeRepository');
 const UserRepository = require('../../../Domains/users/UserRepository');
 const LikeCommentUseCase = require('../LikeCommentUseCase');
 
