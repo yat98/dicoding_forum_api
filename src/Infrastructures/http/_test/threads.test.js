@@ -282,6 +282,13 @@ describe('/threads endpoint', () => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
+      response = await server.inject({
+        method: 'PUT',
+        url: `/threads/${threadId}/comments/${commentId}/likes`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
       // Action
       response = await server.inject({
@@ -300,6 +307,8 @@ describe('/threads endpoint', () => {
       expect(responseJson.data.thread.username).toBeDefined();
       expect(responseJson.data.thread.comments).toBeDefined();
       expect(responseJson.data.thread.comments.length).toBe(2);
+      expect(responseJson.data.thread.comments[1].likeCount).toBeDefined();
+      expect(responseJson.data.thread.comments[1].likeCount).toBe(2);
       expect(responseJson.data.thread.comments[1].content).toBe('**komentar telah dihapus**');
       expect(responseJson.data.thread.comments[1].replies).toBeDefined();
       expect(responseJson.data.thread.comments[1].replies[0].content).toBe('**balasan telah dihapus**');

@@ -28,6 +28,7 @@ describe('AddThreadUseCase', () => {
       date: new Date().toISOString(),
       content: 'lorem',
       is_delete: 'true',
+      count: '0',
     });
 
     const mockCommentTwo = new Comment({
@@ -36,6 +37,7 @@ describe('AddThreadUseCase', () => {
       date: new Date().toISOString(),
       content: 'ipsum',
       is_delete: 'false',
+      count: '1',
     });
 
     const mockReply = new Reply({

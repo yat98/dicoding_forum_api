@@ -171,6 +171,7 @@ describe('CommentRepositoryPostgres', () => {
         date,
         username: 'dicoding',
         is_delete: 'false',
+        count: '0',
       }));
     });
   });

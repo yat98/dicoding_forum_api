@@ -22,6 +22,7 @@ describe('Comment entities', () => {
       date: new Date().toISOString(),
       content: 'lorem ipsum',
       is_delete: 'false',
+      count: '0',
     };
 
     // Action & Assert
@@ -36,6 +37,7 @@ describe('Comment entities', () => {
       date: new Date().toISOString(),
       content: 'lorem ipsum',
       is_delete: 'false',
+      count: '0',
     };
 
     // Action
@@ -46,6 +48,7 @@ describe('Comment entities', () => {
     expect(comment.id).toBe(payload.id);
     expect(comment.username).toBe(payload.username);
     expect(comment.date).toBe(payload.date);
+    expect(comment.likeCount).toBe(0);
     expect(comment.content).toBe(payload.content);
   });
 
@@ -57,6 +60,7 @@ describe('Comment entities', () => {
       date: new Date().toISOString(),
       content: 'lorem ipsum',
       is_delete: 'true',
+      count: '0',
     };
 
     // Action
@@ -67,6 +71,7 @@ describe('Comment entities', () => {
     expect(comment.id).toBe(payload.id);
     expect(comment.username).toBe(payload.username);
     expect(comment.date).toBe(payload.date);
+    expect(comment.likeCount).toBe(0);
     expect(comment.content).toBe('**komentar telah dihapus**');
   });
 });
