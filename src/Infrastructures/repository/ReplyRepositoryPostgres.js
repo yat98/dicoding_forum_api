@@ -24,7 +24,7 @@ class ReplyRepositoryPostgres extends ReplyRepository {
 
     const result = await this._pool.query(query);
 
-    return new AddedReply({ ...result.rows[0] });
+    return new AddedReply(result.rows[0]);
   }
 
   async deleteReply(id) {
@@ -64,7 +64,7 @@ class ReplyRepositoryPostgres extends ReplyRepository {
 
     const results = await this._pool.query(query);
 
-    return results.rows.map((result) => new Reply({ ...result }));
+    return results.rows.map((result) => new Reply(result));
   }
 }
 
